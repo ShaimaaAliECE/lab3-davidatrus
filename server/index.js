@@ -19,8 +19,15 @@ db.query(`CREATE TABLE appointments (
     name text(),
     email text(),
     appointmentDate date()
-);`
-    );  
+);
+`
+, (err, result) =>{
+    if(err){
+        console.log(err);
+    }else{
+        console.log("success");
+    }
+});  
 //post req to create an appointment req name, email and the date of appoint
 app.post('/create', (req, res) =>{
         const name = req.body.name;
