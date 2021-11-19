@@ -82,8 +82,8 @@ app.delete('/delete/:id', (req, res) => {
     });
 });
 
-db.end();
-
 app.listen(3001,()=>{
     console.log("Yessir server is running on port 3001");
 });
+
+db.end();
