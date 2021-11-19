@@ -6,12 +6,21 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json());
 
-const db = mysql.createConnection({
+let  db = mysql.createConnection({
     user: 'root',
-    host: 'localhost',
-    password: '',
+    host: '35.239.211.29',
+    password: 'password',
     database: 'appointmentSystem',
 });
+db.connect();
+
+db.query(`CREATE TABLE appointments (
+    id int,
+    name text(),
+    email text(),
+    appointmentDate date()
+);`
+    );  
 //post req to create an appointment req name, email and the date of appoint
 app.post('/create', (req, res) =>{
         const name = req.body.name;
@@ -65,6 +74,8 @@ app.delete('/delete/:id', (req, res) => {
         }
     });
 });
+
+db.end();
 
 app.listen(3001,()=>{
     console.log("Yessir server is running on port 3001");
