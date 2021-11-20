@@ -8,28 +8,7 @@ app.use(cors())
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './build')));
 
-// let  db = mysql.createConnection({
-//     user: 'root',
-//     host: '35.239.211.29',
-//     password: 'password',
-//     database: 'appointmentSystem',
-// });
-// db.connect();
 
-// db.query(`CREATE TABLE appointments (
-//     id int,
-//     name text(),
-//     email text(),
-//     appointmentDate date()
-// );
-// `
-// ,(err, result) =>{
-//     if(err){
-//         console.log(err);
-//     }else{
-//         console.log("success");
-//     }
-// });  
 
 function createDbConnection(){
     return mysql.createConnection({
@@ -47,16 +26,7 @@ app.post('/create', (req, res) =>{
         const appointmentDate = req.body.appointmentDate;
         const db = createDbConnection();
 
-        db.connect((err)=> {
-            if(!err)
-            {
-                console.log("Connected");
-            }
-            else
-            {
-                console.log(err);
-            }
-        });
+        db.connect();
 
         db.query('INSERT INTO appointments (name, email, appointmentDate) VALUES (?,?,?)',
         [name,email,appointmentDate], (err, result) =>{
@@ -112,7 +82,7 @@ app.delete('/delete/:id', (req, res) => {
     const db = createDbConnection();
 
     db.connect();
-    db.query("DELETE FROM appointments WHERE id = ?", id, (err,result) => {
+    db.query("DELETE FROM appointments WHERE id = ?", id, (err,result) => { //ability to delete reqs
         if(err){
             console.log(err)
         }else{
@@ -122,7 +92,7 @@ app.delete('/delete/:id', (req, res) => {
     });
 });
 
-app.listen(3001,()=>{
+app.listen(80,()=>{
     console.log("Yessir server is running on port 3001");
     const db = createDbConnection();
 
@@ -159,10 +129,3 @@ app.listen(3001,()=>{
     });  
 
 });
-
-// process.on('SIGTERM', shutDown);
-// process.on('SIGINT', shutDown);
-
-// function shutDown(){
-  
-// }
